@@ -8,7 +8,6 @@ import java.util.Random;
 
 import com.bank.domains.AccountBean;
 import com.bank.services.AccountService;
-import com.sun.org.apache.bcel.internal.generic.ACONST_NULL;
 
 public class AccountServiceImpl implements AccountService{
 	private List<AccountBean> beans;	
