@@ -7,18 +7,29 @@ import com.bank.domains.CustomerBean;
 import com.bank.domains.EmployeeBean;
 import com.bank.domains.MemberBean;
 import com.bank.services.MemberService;
+import com.bank.web.daos.MemberDAO;
+import www.bank.web.daoimpls.MemberDAOImpl;
 
 public class MemberServiceImpl implements MemberService{
 	private List<CustomerBean> customers;
 	private List<EmployeeBean> employees;
+	private MemberDAO dao;
+	
 	public MemberServiceImpl() {
 		customers = new ArrayList<>();
 		employees = new ArrayList<>();
+		dao = new MemberDAOImpl();
 	}
 	
 	@Override
 	public void join(CustomerBean param) {
+		System.out.println("join*******"+param.toString());
+
 		customers.add(param);
+		System.out.println("createGrade==="+param.toString());
+		dao.insertCustomer(param);
+	
+	
 	}
 	
 	@Override
@@ -101,22 +112,11 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public boolean login(MemberBean param) {
-		MemberBean bean =   findById(param.getId());
-		boolean flag = false;
-		for( CustomerBean cust : customers) {
-			if(bean.equals(cust.getName())) {
-				flag = true;
-				break;
-			}
-		}
-		for(EmployeeBean emp : employees) {
-			if(bean.equals(emp.getName())) {
-				flag = true;
-				
-			}
-		}
-		return flag;
+	public CustomerBean login(CustomerBean param) {
+		CustomerBean bean = new CustomerBean();
+		bean= dao.login(param);
+		System.out.println("서비스임플"+bean.toString());
+		return bean;
 	}
 
 	@Override
